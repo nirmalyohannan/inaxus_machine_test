@@ -18,8 +18,10 @@ class HomeScreen extends StatelessWidget {
               },
               icon: const Icon(Icons.menu)),
         ),
-        body: const Center(
-          child: Text('Home Screen'),
+        body: const SafeArea(
+          child: Center(
+            child: Text('Home Screen'),
+          ),
         ));
   }
 }

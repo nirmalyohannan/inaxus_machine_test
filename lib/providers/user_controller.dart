@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:inaxus_machine_test/database/db.dart';
 import 'package:inaxus_machine_test/models/api_result.dart';
 import 'package:inaxus_machine_test/resource/content_cache.dart';
 import 'package:inaxus_machine_test/resource/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController extends ChangeNotifier {
   UserController._internal();
@@ -13,18 +14,18 @@ class UserController extends ChangeNotifier {
   String? email;
   String? password;
   List<String> moduleList = [];
-  final _moduleListKey = "moduleList";
 
   bool isGettingModuleList = true;
 
 // returns the error message to UI if has any
   void getContentCache() async {
     // Obtain shared preferences.
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getStringList(_moduleListKey) != null) {
-      moduleList = prefs.getStringList(_moduleListKey)!;
-      name = prefs.getString("name");
-      email = prefs.getString("email");
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var contentCache = await Db.retrieveContentCache();
+    if (contentCache != null) {
+      moduleList = contentCache.moduleList;
+      name = contentCache.name;
+      email = contentCache.email;
     } else {
       isGettingModuleList = true;
       notifyListeners();
@@ -35,9 +36,7 @@ class UserController extends ChangeNotifier {
         email = result.data!.email;
         moduleList = result.data!.moduleList;
 
-        prefs.setStringList(_moduleListKey, moduleList);
-        prefs.setString("name", name!);
-        prefs.setString("email", email!);
+        Db.storeContentCache(result.data!);
       }
     }
 

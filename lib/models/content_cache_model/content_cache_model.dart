@@ -1,6 +1,15 @@
+import 'package:hive/hive.dart';
+part 'content_cache_model.g.dart';
+
+@HiveType(typeId: 0)
 class ContentCacheModel {
+  @HiveField(0)
   List<String> moduleList;
+
+  @HiveField(1)
   String name;
+
+  @HiveField(2)
   String email;
   ContentCacheModel({
     required this.moduleList,

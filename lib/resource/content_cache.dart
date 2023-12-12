@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:inaxus_machine_test/core/constants.dart';
 import 'package:inaxus_machine_test/models/api_result.dart';
-import 'package:inaxus_machine_test/models/content_cache_model.dart';
+import 'package:inaxus_machine_test/models/content_cache_model/content_cache_model.dart';
 
 class ApiContentCache {
 //first data, second error message
